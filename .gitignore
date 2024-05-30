@@ -1,0 +1,6 @@
+data/
+data_split/
+models/
+plots/
+.env/
+results/
