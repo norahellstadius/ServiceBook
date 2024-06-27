@@ -4,3 +4,5 @@ models/
 plots/
 .env/
 results/
+.ipynb_checkpoints/
+__pycache__/
