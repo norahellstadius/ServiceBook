@@ -91,7 +91,8 @@ For example, to run the training script with the default batch size (32), pixel 
 python3 train.py --input_data_dir "PATH/TO/DATA" --split_data_dir "PATH/TO/SAVE/SPLIT/DATA"
 ```
 
-After training is complete, the paths where the models are saved will be printed in the terminal. Two models are saved: a preliminary model (pre-model) and another model trained for an additional 3 epochs (post-model).
+After training is complete, the paths where the models are saved will be printed in the terminal. 
+Two models are saved: a preliminary model (pre-model) and another model trained for an additional 3 epochs with more layers allowed to be trained (post-model).
 
 The training loss plot is saved in `plots/train_history.png`. The directory is also printed in the terminal.
 
