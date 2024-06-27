@@ -80,6 +80,7 @@ def plot_history(model_history: Any, name: str, save_dir: str = "../plots/") -> 
     save_dir -- directory to save the plot (default is "../plots/")
     """
     check_dir(save_dir)
+    save_path = os.path.join(save_dir, f"{name}.png")
     plt.plot(model_history.history['accuracy'], label='accuracy')
     plt.plot(model_history.history['val_accuracy'], label='val_accuracy')
     plt.plot(model_history.history['loss'], label='loss')
@@ -88,7 +89,8 @@ def plot_history(model_history: Any, name: str, save_dir: str = "../plots/") -> 
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy/Loss')
     plt.legend()
-    plt.savefig(os.path.join(save_dir, f"{name}.png"))
+    plt.savefig(save_path)
+    print(f"Training history plot is saved at: {save_path}")
     plt.close()
 
 
@@ -163,12 +165,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fintune a model using ResNet50.")
     parser.add_argument("--input_data_dir", type=str, default="../data", help="Directory where data is")
     parser.add_argument("--split_data_dir", type=str, default="../data", help="Directory where the split data is to be saved")
+    parser.add_argument("--pixel", type=int, default=224, help="Pixel dimensions for the input images")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size for training")
     parser.add_argument("--epochs", type=int, default=5, help="Number of epochs for training")
 
     args = parser.parse_args()
     dir_train, dir_val, dir_test = prepare_data_split(args.input_data_dir, args.split_data_dir)
-    train_gen, val_gen, test_gen = datagen(dir_train = dir_train, dir_val = dir_val, dir_test = dir_test, batchSize=args.batch_size)
+    train_gen, val_gen, test_gen = datagen(dir_train = dir_train, dir_val = dir_val, dir_test = dir_test, batchSize=args.batch_size, pixel = args.pixel)
     class_weights = get_class_weights(train_gen)
     model_res50_v2, Res50hist_v2 = create_model(train_set = train_gen, val_set = val_gen, class_weights =class_weights, num_epochs = args.epochs)
     plot_history(Res50hist_v2, name="train_history")

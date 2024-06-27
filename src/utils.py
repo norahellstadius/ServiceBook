@@ -1,6 +1,6 @@
 import os 
 
-def check_dir(directory):
+def check_dir(directory: str) -> None:
     """
     Check if a directory exists, and if not, create it.
 
